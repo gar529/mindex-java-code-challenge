@@ -30,7 +30,7 @@ public class ChallengeApplicationTests {
 	@Test
 	public void contextLoads() {
 		
-		/** Task 1 **/
+		/** Task 1 */
 		ReportingStructure reportingStructure1 = reportingStructureServiceImpl.read("62c1084e-6e34-4630-93fd-9153afb65309");
         assertNotNull(reportingStructure1.getEmployee());
         assertEquals(0, reportingStructure1.getNumberOfReports());
@@ -39,7 +39,7 @@ public class ChallengeApplicationTests {
         assertNotNull(reportingStructure2.getEmployee());
         assertEquals(4, reportingStructure2.getNumberOfReports());
         
-        /** Task 2 **/
+        /** Task 2 */
 		
         // Add Compensation record
         Compensation testCompensation = new Compensation();
