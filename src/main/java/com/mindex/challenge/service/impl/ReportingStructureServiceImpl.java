@@ -38,7 +38,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     }
     
     /**
-     * Class to count the number of distinct reports and build out the reporting structure of and employee
+     * Class to count the number of distinct reports and build out the reporting structure of an employee
      */
     private class DirectReportCounter {
 		
@@ -93,10 +93,11 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
 				
 				// only count and traverse unique records
 				if (!employeeMap.containsKey(employee.getEmployeeId())) {
+					
 					// increment the numReports counter
 					numReports++;
 					
-					// get the built out employee object and apply it to the existing object
+					// get the saved employee object and apply it to the existing object
 					employee.clone(employeeRepository.findByEmployeeId(employee.getEmployeeId()));
 					
 					// add the unique record to the map
