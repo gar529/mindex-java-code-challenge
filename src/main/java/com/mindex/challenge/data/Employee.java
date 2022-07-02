@@ -60,4 +60,13 @@ public class Employee {
     public void setDirectReports(List<Employee> directReports) {
         this.directReports = directReports;
     }
+    
+    public void clone(final Employee employee) {
+    	this.employeeId = employee.getEmployeeId();
+    	this.firstName = employee.getFirstName();
+    	this.lastName = employee.getLastName();
+    	this.position = employee.getPosition();
+    	this.department = employee.getDepartment();
+    	this.directReports = employee.getDirectReports();
+    }
 }
