@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 @Repository
 public interface CompensationRepository extends MongoRepository<Compensation, String> {
 	
+	// custom query to search by employee ID
 	@Query("{ 'employee.employeeId' : ?0 }")
     Compensation findByEmployeeId(String employeeId);
 }

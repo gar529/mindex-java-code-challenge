@@ -19,7 +19,7 @@ public class CompensationServiceImpl implements CompensationService {
     @Override
     public Compensation create(Compensation compensation) {
         LOG.debug("Creating compensation [{}]", compensation);
-
+        
         compensationRepository.insert(compensation);
 
         return compensation;

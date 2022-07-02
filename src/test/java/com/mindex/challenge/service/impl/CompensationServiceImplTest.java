@@ -1,12 +1,9 @@
 package com.mindex.challenge.service.impl;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mindex.challenge.data.Compensation;
@@ -23,23 +20,8 @@ import java.util.UUID;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CompensationServiceImplTest {
 
-    private String compensationUrl;
-    private String compensationIdUrl;
-
     @Autowired
     private CompensationService compensationService;
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Before
-    public void setup() {
-        compensationUrl = "http://localhost:" + port + "/compensation";
-        compensationIdUrl = "http://localhost:" + port + "/compensation/{id}";
-    }
 
     @Test
     public void testCreateReadUpdate() {
@@ -57,7 +39,7 @@ public class CompensationServiceImplTest {
         testCompensation.setEffectiveDate(LocalDate.now());
 
         // Create checks
-        Compensation createdCompensation = restTemplate.postForEntity(compensationUrl, testCompensation, Compensation.class).getBody();
+        Compensation createdCompensation = compensationService.create(testCompensation);
         Employee createdEmployee = createdCompensation.getEmployee();
         
         assertNotNull(createdEmployee);
@@ -67,7 +49,7 @@ public class CompensationServiceImplTest {
 
 
         // Read checks
-        Compensation readCompensation = restTemplate.getForEntity(compensationIdUrl, Compensation.class, createdEmployee.getEmployeeId()).getBody();
+        Compensation readCompensation = compensationService.read(createdEmployee.getEmployeeId());
         Employee readEmployee = readCompensation.getEmployee();
         assertEquals(createdEmployee.getEmployeeId(), readEmployee.getEmployeeId());
         assertEmployeeEquivalence(createdEmployee, readEmployee);
