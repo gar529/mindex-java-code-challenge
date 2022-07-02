@@ -20,9 +20,10 @@ public class CompensationServiceImpl implements CompensationService {
     public Compensation create(Compensation compensation) {
         LOG.debug("Creating compensation [{}]", compensation);
         
-        compensationRepository.insert(compensation);
+        validateCompensation(compensation);
+        Compensation createdCompensation = compensationRepository.insert(compensation);
 
-        return compensation;
+        return createdCompensation;
     }
 
     @Override
@@ -36,5 +37,28 @@ public class CompensationServiceImpl implements CompensationService {
         }
 
         return compensation;
+    }
+    
+    private void validateCompensation(final Compensation compensation) {
+    	
+    	String errMsg = null;
+    	
+    	if (compensation.getEmployee() == null) {
+    		errMsg = "Employee is required";
+    	}
+    	else if (compensation.getEmployee().getEmployeeId() == null || 
+    			compensation.getEmployee().getEmployeeId().trim().equals("")) {
+    		errMsg = "Employee ID is required";
+    	}
+    	else if (compensation.getSalary() == null) {
+    		errMsg = "Salary is required";
+    	}
+    	else if (compensation.getEffectiveDate() == null) {
+    		errMsg = "Effective Date is required";
+    	}
+    	
+    	if (errMsg != null) {
+    		throw new RuntimeException(errMsg);
+    	}
     }
 }
